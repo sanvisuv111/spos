@@ -1,0 +1,42 @@
+public class MathLibrary {
+public int add(int a, int b) { return a + b;
+}
+public int subtract(int a, int b) { return a - b;
+}
+public int multiply(int a, int b) { return a * b;
+}
+public double divide(double a, double b) { if (b != 0) {
+return a / b;
+} else {
+throw new ArithmeticException("Division by zero");
+}
+}
+// Trigonometric Operations public double sin(double angle) {
+return Math.sin(Math.toRadians(angle));
+}
+public double cos(double angle) {
+return Math.cos(Math.toRadians(angle));
+}
+public double tan(double angle) {
+return Math.tan(Math.toRadians(angle));
+}
+// String Operations
+public String concatenate(String s1, String s2) { return s1 + s2;
+}
+public String reverse(String s) {
+return new StringBuilder(s).reverse().toString();
+}
+// Main method for testing the library public static void main(String[] args) {
+// Create an instance of MathLibrary MathLibrary mathLib = new MathLibrary();
+// Test Arithmetic Operations
+
+System.out.println("Arithmetic Operations:"); System.out.println("Addition (5 + 3): " + mathLib.add(5, 3));
+System.out.println("Subtraction (5 - 3): " + mathLib.subtract(5, 3));
+System.out.println("Multiplication (5 * 3): " + mathLib.multiply(5, 3));
+System.out.println("Division (5 / 3): " + mathLib.divide(5.0, 3.0));
+// Test Trigonometric Operations System.out.println("\nTrigonometric Operations:"); System.out.println("Sine of 30 degrees: " + mathLib.sin(30)); System.out.println("Cosine of 60 degrees: " + mathLib.cos(60)); System.out.println("Tangent of 45 degrees: " + mathLib.tan(45));
+// Test String Operations System.out.println("\nString Operations:");
+System.out.println("Concatenation (\"Hello\" + \" World\"): " + mathLib.concatenate("Hello", " World"));
+System.out.println("Reversed (\"Hello\"): " + mathLib.reverse("Hello"));
+}
+}
