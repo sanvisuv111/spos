@@ -18,3 +18,20 @@ public class SampleDLL {
 		System.out.println("Result: "+new SampleDLL().add(num1,num2));
 	}
 }
+
+
+
+//path
+javac -h . testJni.java //compiilation of java 
+
+gcc -c -fPIC -I /usr/lib/jvm/java-1.8.0-openjdk-amd64/include -I/usr/lib/jvm/java-1.8.0-openjdk-amd64/include/linux testJni1.c -o testJni1.o
+gcc /path for jni.h/    file.c
+
+gcc -shared -fPIC -o libnative.so testJni.o -lc
+
+java -Djava.library.path=. testJni
+
+java /librarpath/ filename
+
+
+
