@@ -1,0 +1,181 @@
+package page;
+import java.util.Scanner;
+public class PageReplacementAlgorithms {
+    // Function to simulate FIFO page replacement
+    public static void fifo(int incomingStream[], int frames) {
+        int pageFaults = 0; 
+        int temp[] = new int[frames]; 
+        for (int i = 0; i < frames; i++) {
+            temp[i] = -1; 
+        }
+        System.out.println("FIFO:");
+        System.out.println("Incoming \t Frame 1 \t Frame 2 \t Frame 3");
+        for (int i = 0; i < incomingStream.length; i++) {
+            int s = 0; 
+            for (int j = 0; j < frames; j++) {
+                if (incomingStream[i] == temp[j]) {
+                    s++; 
+                    pageFaults--; 
+                }
+            }
+            pageFaults++; 
+            if ((pageFaults <= frames) && (s == 0)) {
+                temp[i] = incomingStream[i];
+            } else if (s == 0) {
+                temp[(pageFaults - 1) % frames] = incomingStream[i]; 
+            }
+            System.out.print(incomingStream[i] + "\t\t\t");
+            for (int j = 0; j < frames; j++) {
+                if (temp[j] != -1)
+                    System.out.print(temp[j] + "\t\t\t");
+                else
+                    System.out.print(" - \t\t\t");
+            }
+            System.out.println();
+        }
+        System.out.println("Total Page Faults: " + pageFaults);
+    }
+    // Function to simulate LRU page replacement
+    public static void lru(int incomingStream[], int frames) {
+        int pageFaults = 0;
+        int temp[] = new int[frames];
+        int lru[] = new int[frames];
+        for (int i = 0; i < frames; i++) {
+            temp[i] = -1;
+        }
+        System.out.println("LRU:");
+        System.out.println("Incoming \t Frame 1 \t Frame 2 \t Frame 3");
+        for (int i = 0; i < incomingStream.length; i++) {
+            int s = 0; 
+            for (int j = 0; j < frames; j++) {
+                if (incomingStream[i] == temp[j]) {
+                    s++; 
+                    pageFaults--;
+                    lru[j] = i; 
+                }
+            }
+            pageFaults++;
+            if ((pageFaults <= frames) && (s == 0)) {
+                temp[i] = incomingStream[i];
+                lru[i] = i;
+            } else if (s == 0) {
+                int min = lru[0], pos = 0;
+
+                for (int j = 1; j < frames; j++) {
+                    if (lru[j] < min) {
+                        min = lru[j];
+                        pos = j;
+                    }
+                }
+                temp[pos] = incomingStream[i];
+                lru[pos] = i;
+            }
+            System.out.print(incomingStream[i] + "\t\t\t");
+            for (int j = 0; j < frames; j++) {
+                if (temp[j] != -1)
+                    System.out.print(temp[j] + "\t\t\t");
+                else
+                    System.out.print(" - \t\t\t");
+            }
+            System.out.println();
+        }
+        System.out.println("Total Page Faults: " + pageFaults);
+    }
+    // Function to simulate Optimal page replacement
+    public static void optimal(int incomingStream[], int frames) {
+        int pageFaults = 0;
+        int temp[] = new int[frames];
+        for (int i = 0; i < frames; i++) {
+            temp[i] = -1;
+        }
+        System.out.println("Optimal:");
+        System.out.println("Incoming \t Frame 1 \t Frame 2 \t Frame 3");
+        for (int i = 0; i < incomingStream.length; i++) {
+            int s = 0; 
+            for (int j = 0; j < frames; j++) {
+                if (incomingStream[i] == temp[j]) {
+                    s++;
+                    pageFaults--;
+                    break;
+                }
+            }
+            pageFaults++;
+            if ((pageFaults <= frames) && (s == 0)) {
+                temp[i] = incomingStream[i];
+            } else if (s == 0) {
+                int[] future = new int[frames];
+                boolean found[] = new boolean[frames];
+                for (int j = 0; j < frames; j++) {
+                    future[j] = Integer.MAX_VALUE;
+                    found[j] = false;
+                    for (int k = i + 1; k < incomingStream.length; k++) {
+                        if (temp[j] == incomingStream[k]) {
+                            future[j] = k;
+                            found[j] = true;
+                            break;
+                        }
+                    }
+                }
+                int max = -1, pos = -1;
+                for (int j = 0; j < frames; j++) {
+                    if (!found[j]) {
+                        pos = j;
+                        break;
+                    }
+                    if (future[j] > max) {
+                        max = future[j];
+                        pos = j;
+                    }
+                }
+                temp[pos] = incomingStream[i];
+            }
+            System.out.print(incomingStream[i] + "\t\t\t");
+            for (int j = 0; j < frames; j++) {
+                if (temp[j] != -1)
+                    System.out.print(temp[j] + "\t\t\t");
+                else
+                    System.out.print(" - \t\t\t");
+            }
+            System.out.println();
+        }
+        System.out.println("Total Page Faults: " + pageFaults);
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of pages in the incoming stream: ");
+        int pages = scanner.nextInt();
+        int incomingStream[] = new int[pages];
+        System.out.println("Enter the pages (space-separated): ");
+        for (int i = 0; i < pages; i++) {
+            incomingStream[i] = scanner.nextInt();
+        }
+        System.out.print("Enter the number of frames: ");
+        int frames = scanner.nextInt();
+        int choice;
+        do {
+            System.out.println("\nChoose a page replacement algorithm:");
+            System.out.println("1. FIFO");
+            System.out.println("2. LRU");
+            System.out.println("3. Optimal");
+            System.out.println("4. Exit");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    fifo(incomingStream, frames);
+                    break;
+                case 2:
+                    lru(incomingStream, frames);
+                    break;
+                case 3:
+                    optimal(incomingStream, frames);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        } while (choice != 4);
+        scanner.close();
+    }
+}
