@@ -23,7 +23,7 @@ make testJni.c file
 
 #include<jni.h>
 #include<stdio.h>
-#include "testJni1.h" 
+#include "testJni.h" 
 JNIEXPORT jint JNICALL Java_testJni_add(JNIEnv *env, jobject thisobj, jint num1, jint num2)
 {
 jint res;
@@ -45,4 +45,17 @@ java -Djava.library.path=. testJni
 java /librarpath/ filename
 
 
+
+or use this for testJni.java file
+public class testJni1
+{
+static{
+System.loadLibrary("native");
+}
+public static void main(String args[])
+{
+System.out.println("Addition is "+ new testJni1().add(10,20));
+}
+private native int add(int n1,int n2);
+}
 
