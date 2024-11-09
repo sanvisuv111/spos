@@ -5,7 +5,7 @@ public class SampleDLL {
 		System.loadLibrary("SampleDLL");
 	}
 
-	public native int add(int num1, int num2);
+	public native int add(int num1, int num2); 
 
 	public static void main(String args[]) {
 		Scanner scanner = new Scanner(System.in);
@@ -25,6 +25,7 @@ public class SampleDLL {
 javac -h . testJni.java //compiilation of java 
 
 gcc -c -fPIC -I /usr/lib/jvm/java-1.8.0-openjdk-amd64/include -I/usr/lib/jvm/java-1.8.0-openjdk-amd64/include/linux testJni1.c -o testJni1.o
+
 gcc /path for jni.h/    file.c
 
 gcc -shared -fPIC -o libnative.so testJni.o -lc
