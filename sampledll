@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class SampleDLL {
+public class testJni {
 	static {
-		System.loadLibrary("SampleDLL");
+		System.loadLibrary("native");
 	}
 
 	public native int add(int num1, int num2); 
@@ -15,11 +15,21 @@ public class SampleDLL {
 		num1 = scanner.nextInt();
 		System.out.print("Enter second number: ");
 		num2 = scanner.nextInt();
-		System.out.println("Result: "+new SampleDLL().add(num1,num2));
+		System.out.println("Result: "+new testJni().add(num1,num2));
 	}
 }
 
+make testJni.c file 
 
+#include<jni.h>
+#include<stdio.h>
+#include "testJni1.h" 
+JNIEXPORT jint JNICALL Java_testJni_add(JNIEnv *env, jobject thisobj, jint num1, jint num2)
+{
+jint res;
+res=num1+num2;
+return res;
+}
 
 //path
 javac -h . testJni.java //compiilation of java 
