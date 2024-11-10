@@ -1,4 +1,6 @@
 from os import sep, write
+import pdb
+
 
 class Mnemonics:
     def __init__(self):
@@ -54,7 +56,7 @@ class Mnemonics:
             return "RG"
         else:
             return ""
-    
+
     def getMachineCode(self,string):
         if string in self.AD:
             return self.AD[string]
@@ -80,12 +82,13 @@ class pass1:
         self.IC = [] #IC Intermediate Code
         self.location = 0
         self.litTabPtr = 0 #Literal Table Pointer
-        self.InputFile = open("input.txt","r")
+        #self.InputFile = open("/content/drive/MyDrive/input.txt","r")
+        self.InputFile = open("/content/sample_data/input.txt","r")
         self.literalTableFile = open("literalTable.txt","w")
         self.symbolTableFile = open("symbolTable.txt","w")
         self.poolTableFile = open("poolTable.txt","w")
         self.ICFile = open("intermediateCode.txt","w")
-        
+
 
     def calculateLocation(self,string):
         if "+" in string:
@@ -96,13 +99,13 @@ class pass1:
             return self.symbolTable[string[0]] - int(string[1])
         else:
             return self.symbolTable[string]
-    
+
     def parseFile(self):
         for line in self.InputFile.readlines():
             self.IC.append([])
             line = line.strip("\n")
             line = line.split("\t")
-            
+
 
             # For label
             if line[0] != "":
@@ -110,7 +113,7 @@ class pass1:
                     self.symbolTable[line[0]] = self.location #Set location
                 else:
                     self.symbolTable[line[0]] = self.location #add label,loc
-            
+
             # For Opcode
             if line[1] == "START":
                 self.location = int(line[2])
@@ -219,7 +222,7 @@ class pass1:
                         self.IC[-1].append(self.location)
 
                 self.location += 1
-        
+
         self.printLiteralTable()
         self.printSymbolTable()
         self.printPoolTable()
@@ -235,8 +238,8 @@ class pass1:
             self.literalTableFile.write(line)
         self.literalTableFile.close()
         print("\n")
-    
-    
+
+
     def printSymbolTable(self):
         tab = "\t"
         endline = "\n"
@@ -256,7 +259,7 @@ class pass1:
             print(self.poolTable[item])
             self.poolTableFile.write(str(self.poolTable[item]) + endline)
         self.poolTableFile.close()
-    
+
     def printIntermdeiateCode(self):
         tab = "\t"
         endline = "\n"
@@ -275,5 +278,6 @@ class pass1:
 
 obj = pass1()
 obj.parseFile()
+
 
 
