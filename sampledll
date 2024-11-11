@@ -18,6 +18,25 @@ public class testJni {
 		System.out.println("Result: "+new testJni().add(num1,num2));
 	}
 }
+or use this :======
+import java.util.Scanner;
+public class testJni
+{
+    static{
+        System.loadLibrary("native");
+    }
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter the first no: ");
+        int n1=sc.nextInt();
+        System.out.println("enter the second no: ");
+        int n2=sc.nextInt();
+        System.out.println("addition is:"+ new testJni().add(n1,n2));
+        
+    }
+    private native int add(int n1,int n2);
+}
 
 make testJni1.c file 
 
