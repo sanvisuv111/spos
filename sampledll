@@ -87,5 +87,5 @@ java -Djava.library.path=. testJni
 java /librarpath/ filename
 
 
-
+then go to other location, computer, usr,lib, jvm, jdk should have include file in which testJni.h is present copy its path then copy linuxs path
 
