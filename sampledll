@@ -19,15 +19,16 @@ public class testJni {
 	}
 }
 
-make testJni.c file 
+make testJni1.c file 
 
 #include<jni.h>
 #include<stdio.h>
-#include "testJni.h" 
-JNIEXPORT jint JNICALL Java_testJni_add(JNIEnv *env, jobject thisobj, jint num1, jint num2)
+#include "testJni1.h"
+JNIEXPORT jint JNICALL Java_testJni1_add
+(JNIEnv *env, jobject thisobj, jint n1, jint n2)
 {
 jint res;
-res=num1+num2;
+res=n1+n2;
 return res;
 }
 
@@ -38,9 +39,9 @@ gcc -c -fPIC -I /usr/lib/jvm/java-1.8.0-openjdk-amd64/include -I/usr/lib/jvm/jav
 
 gcc /path for jni.h/    file.c
 
-gcc -shared -fPIC -o libnative.so testJni.o -lc
+gcc -shared -fPIC -o libnative.so testJni1.o -lc
 
-java -Djava.library.path=. testJni
+java -Djava.library.path=. testJni1
 
 java /librarpath/ filename
 
@@ -58,4 +59,33 @@ System.out.println("Addition is "+ new testJni1().add(10,20));
 }
 private native int add(int n1,int n2);
 }
+
+
+
+
+
+
+
+
+
+
+\\\\\path
+
+
+javac -h . testJni.java
+
+//compiilation of java 
+
+gcc -c -fPIC -I /usr/lib/jvm/java-1.8.0-openjdk-amd64/include -I/usr/lib/jvm/java-1.8.0-openjdk-amd64/include/linux testJni1.c -o testJni1.o
+
+gcc /path for jni.h/    file.c
+
+gcc -shared -fPIC -o libnative.so testJni.o -lc
+
+java -Djava.library.path=. testJni
+
+java /librarpath/ filename
+
+
+
 
